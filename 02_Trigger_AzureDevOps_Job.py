@@ -1,4 +1,19 @@
 # Databricks notebook source
+# MAGIC %md
+# MAGIC 
+# MAGIC ### Define Parameters, install Azure DevOps package and import Python libraries
+# MAGIC 
+# MAGIC An MLFlow webhook will call this notebook and will pass a message as a parameter with the information of the trigger event. We will create a parameter in the notebook using the Databricks Widgets API to capture that message and use throughout the notebook. We also have to install the azure-devops package use PIP and then import the required libraries to authenticate against Azure DevOps and trigger the CI/CD pipeline.
+
+# COMMAND ----------
+
+# Create a notebook widget to receive event message from MLFlow Webhook
+dbutils.widgets.text("event_message", "")
+
+# COMMAND ----------
+
+# Install azure-devops python package
+
 pip install azure-devops
 
 # COMMAND ----------
@@ -14,15 +29,28 @@ import json
 
 # COMMAND ----------
 
-# Obtain model_name from webhook payload
+# Capture event message from MLFlow Webhook payload
 
 webhook_payload = dbutils.widgets.get("event_message")
 webhook_payload = webhook_payload.replace('\\','')
 print(webhook_payload)
+
+# Parse event message to get model_name
+
 payload_json = json.loads(webhook_payload)
 model_name = payload_json["model_name"]
 print(model_name)
 
+
+# COMMAND ----------
+
+# MAGIC %md
+# MAGIC 
+# MAGIC ### Trigger Azure DevOps Pipeline
+# MAGIC 
+# MAGIC After capturing the model name that triggered this Databricks job, we can now retrieve the run_id and the version of the model. We will pass those two as parameters when triggering the Azure DevOps Pipeline.
+# MAGIC 
+# MAGIC Additionally, we need to retrieve the access token and organization url values that were previously set in a secret scope. With all these values we can now trigger the Azure DevOps pipeline.
 
 # COMMAND ----------
 
@@ -49,7 +77,7 @@ pipeline_client = connection.clients_v6_0.get_pipelines_client()
 # Define parameters that will be passed to the pipeline
 run_parameters = RunPipelineParameters(template_parameters = {"run_id":run_id, "model_version":model_version})
 
-# Run pipeline
+# Trigger pipeline
 runPipeline = pipeline_client.run_pipeline(run_parameters=run_parameters,project="<AZURE_DEVOPS_PROJECT_", pipeline_id=<AZURE_DEVOPS_PIPELINE_ID>)
 print("Pipeline has been triggered")
 
