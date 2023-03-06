@@ -1,5 +1,15 @@
 # Databricks notebook source
-# MAGIC %md You may find this solution accelerator notebook at https://github.com/databricks-industry-solutions/edge-ml-for-manufacturing
+# MAGIC %md 
+# MAGIC ###Creating MLflow Webhooks to enable automation
+# MAGIC 
+# MAGIC MLflow webhooks enable you to listen to Model Registry events, such as when a model version is created or when that version is transitioned into a production environment, to automatically trigger actions. These webhooks allow you to automate your MLOps processes and integrate your machine learning pipeline with other CI/CD tools such as Azure DevOps. In this scenario, we will trigger the Azure DevOps pipeline that creates and uploads the Docker image anytime a version of our ML Model is transitioned into the production stage.
+# MAGIC 
+# MAGIC MLflow webhooks can be created through the Databricks REST API or using the Python library databricks-registry-webhooks. Here is the important section of Python code that creates the MLflow webhook to track when the “sensor_model” gets transitioned into production.
+
+# COMMAND ----------
+
+# MAGIC %md
+# MAGIC To call the Databricks Job, we pass the Job ID we captured earlier to the JobSpec function. There are multiple Webhook events that can be configured such as when a new version of the ML model gets created (MODEL_VERSION_CREATED) or when a new ML model is registered in MLFlow registry (REGISTERED_MODEL_CREATED). For this example, we are configuring the Webhook to be triggered anytime a version of the ML model is transitioned into the production stage.
 
 # COMMAND ----------
 
@@ -62,6 +72,7 @@ job_json = {
 
 # COMMAND ----------
 
+
 # DBTITLE 1,We automate the creation of a simple job for Notebook 02
 nsc = NotebookSolutionCompanion()
 job_params = nsc.customize_job_json(job_json, "webhook-ml-edge-deploy", nsc.solacc_path, nsc.cloud)
@@ -69,6 +80,7 @@ job_params = nsc.customize_job_json(job_json, "webhook-ml-edge-deploy", nsc.sola
 # we will use this job_id in webhook definition 
 job_id = nsc.create_or_update_job_by_name(job_params)
 print(f"Job id is {job_id}")
+
 
 # COMMAND ----------
 
@@ -80,10 +92,11 @@ job_webhook = RegistryWebhooksClient().create_webhook(
   events=["TRANSITION_REQUEST_CREATED", "MODEL_VERSION_TRANSITIONED_TO_PRODUCTION"],
   job_spec=job_spec,
   description="Job webhook trigger",
-  status="TEST_MODE"
+  status="ACTIVE"
 )
 
 print(job_webhook)
+
 
 # http_webhook = RegistryWebhooksClient().create_webhook(
 #   events=["TRANSITION_REQUEST_CREATED", "MODEL_VERSION_TRANSITIONED_TO_PRODUCTION"],
@@ -117,3 +130,4 @@ RegistryWebhooksClient().list_webhooks(model_name=model_name)
 
 # Uncomment code below to delete any webhook by providing the webhook id
 # RegistryWebhooksClient().delete_webhook(id=job_webhook.id)
+

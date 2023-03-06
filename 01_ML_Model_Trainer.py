@@ -1,8 +1,23 @@
 # Databricks notebook source
 # MAGIC %md
+# MAGIC 
+# MAGIC ### Deploying and Maintaining Machine Learning Models on the “Edge” in Manufacturing
+# MAGIC 
+# MAGIC Edge computing is a computing paradigm that refers to devices that store, process data and make decisions very close to where that data is being generated. Edge computing has existed for a long time but the “Edge” has become more relevant over the last few years as more companies move their storage and compute capacity to the cloud but still have the need to keep some compute processing running on-premise to meet certain business or technical requirements. In manufacturing, it is very common to see local servers deployed at manufacturing sites that are used to collect and store data from various machines/sensors in a manufacturing plant and apply AI/ML models to incoming data to analyze patterns and anomalies in the data.
+# MAGIC 
+# MAGIC 
+# MAGIC ### TODO add image from blog
+# MAGIC <img 
+# MAGIC 
+# MAGIC      
+# MAGIC The ML-optimized runtime in Databricks contains popular ML frameworks such as PyTorch, TensorFlow, and scikit-learn. We will build a basic Random Forest ML model in Databricks that will later be deployed to edge devices to execute inferences directly on the manufacturing floor. This solution accelerator will focus on deploying an ML Model built on Databricks to edge devices. 
+
+# COMMAND ----------
+
+# MAGIC %md
 # MAGIC ### Generate sample data to be used throughout the rest of the notebook
 # MAGIC 
-# MAGIC This solution accelerator will focus on deploying an ML Model built on Databricks to edge devices. To build an ML Model, we need a dataset that we can use to train the model. The next few cells will generate artificial "IoT/Sensor" data that we'll be used to train a Random Forest.
+# MAGIC To build an ML Model, we need a dataset that we can use to train the model. The next few cells will generate artificial "IoT/Sensor" data that we'll be used to train a Random Forest.
 
 # COMMAND ----------
 
@@ -14,6 +29,7 @@ import mlflow.spark
 import mlflow.sklearn
 from mlflow.tracking.client import MlflowClient
 
+# Turn on MLFLow's autologging of parameters from Spark
 mlflow.spark.autolog()
 
 # COMMAND ----------
@@ -23,7 +39,7 @@ mlflow.spark.autolog()
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC Code below will create a synthetic Spark Dataframe with 10 million rows. Each row will contain randomly generated data from 5 sensors. The ML Model that will train below will attemp to predict the value of sensor 5 using the other 4 sensors as inputs to the model.
+# MAGIC The code below will create a synthetic Spark Dataframe with 10 million rows. Each row will contain randomly generated data from 5 sensors. The ML Model that will train below will attempt to predict the value of sensor 5 using the other 4 sensors as inputs to the model.
 
 # COMMAND ----------
 
@@ -46,7 +62,7 @@ display(data_df)
 # MAGIC 
 # MAGIC ### Create training and test datasets
 # MAGIC 
-# MAGIC This solution accelerator is focused on the deployment of ML models at the edge and not on the process of building/training machine learning models. However, it is always a best practice to split up the input dataset into train and test datasets. The code below will split that up and will allocate 70% of the records to the training dataset to build the ML model and 30% to the testing dataset that can be used later to evaluate the performance of the model.
+# MAGIC It is always a best practice to split up the input dataset into train and test datasets. The code below will split that up and will allocate 70% of the records to the training dataset to build the ML model and 30% to the testing dataset that can be used later to evaluate the performance of the model.
 
 # COMMAND ----------
 
@@ -77,6 +93,7 @@ maxFeatures = 4
 nEstimators = 10
 criterion = "mse"
 
+#Turn on MLFlow's autologging of parameters from scikit-learn 
 mlflow.sklearn.autolog()
 with mlflow.start_run(run_name = "skl_randfor_autolog"):
     
