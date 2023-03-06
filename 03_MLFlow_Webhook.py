@@ -72,8 +72,8 @@ job_json = {
 
 # COMMAND ----------
 
-
 # DBTITLE 1,We automate the creation of a simple job for Notebook 02
+
 nsc = NotebookSolutionCompanion()
 job_params = nsc.customize_job_json(job_json, "webhook-ml-edge-deploy", nsc.solacc_path, nsc.cloud)
 

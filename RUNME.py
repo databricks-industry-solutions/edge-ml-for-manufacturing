@@ -77,7 +77,7 @@ job_json = {
             {
                 "job_cluster_key": "edge_ml_cluster",
                 "notebook_task": {
-                    "notebook_path": f"01_mlflow-webhook-example"
+                    "notebook_path": f"01_ML_Model_Trainer"
                 },
                 "task_key": "edge_ml_01"
             },
