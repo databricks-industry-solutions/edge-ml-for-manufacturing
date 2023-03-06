@@ -1,5 +1,12 @@
 # Databricks notebook source
 # MAGIC %md
+# MAGIC ###Create Databricks Job to trigger Azure DevOps pipeline	
+# MAGIC 
+# MAGIC There are multiple ways to trigger an Azure DevOps pipeline - it can be triggered manually, on a schedule, or by an external event via an API request. In our case, we will use a Databricks Job to trigger the Azure DevOps pipeline. The purpose of this Databricks Job is to capture information about the model that we want to deploy such as the Run ID and the version of the model and then trigger the Azure DevOps pipeline and pass that information in the API request. 
+
+# COMMAND ----------
+
+# MAGIC %md
 # MAGIC 
 # MAGIC ### Define Parameters, install Azure DevOps package and import Python libraries
 # MAGIC 
@@ -81,3 +88,10 @@ run_parameters = RunPipelineParameters(template_parameters = {"run_id":run_id, "
 runPipeline = pipeline_client.run_pipeline(run_parameters=run_parameters,project="<AZURE_DEVOPS_PROJECT_", pipeline_id=<AZURE_DEVOPS_PIPELINE_ID>)
 print("Pipeline has been triggered")
 
+
+# COMMAND ----------
+
+# MAGIC %md
+# MAGIC Once the job gets created, you can open the job details in Databricks UI and capture the Job ID located on the top right corner of the window. This Job ID will be used in the next section.
+# MAGIC 
+# MAGIC ###TODO grab the image from blog
