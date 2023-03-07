@@ -1,7 +1,9 @@
 # Databricks notebook source
-# DBTITLE 1,Get access token from notebook environment
-access_token = dbutils.notebook.entry_point.getDbutils().notebook().getContext().apiToken().getOrElse(None)
-username = dbutils.notebook.entry_point.getDbutils().notebook().getContext().userName().getOrElse(None)
+# DBTITLE 1,Get access info from notebook context
+ctx = dbutils.notebook.entry_point.getDbutils().notebook().getContext()
+access_token = ctx.apiToken().getOrElse(None)
+databricks_token = access_token
+databricks_host = ctx.apiUrl().getOrElse(None)
 
 # COMMAND ----------
 
@@ -12,4 +14,14 @@ model_name = "sensor_model"
 
 # DBTITLE 1,Set mlflow experiment so that the logging steps works in jobs as well
 import mlflow
-mlflow.set_experiment('/Users/{}/edge_ml'.format(username))
+username = ctx.userName().getOrElse(None)
+experiment_path = '/Users/{}/edge_ml'.format(username)
+mlflow.set_experiment(experiment_path)
+
+# COMMAND ----------
+
+print(f"Defined model_name, databricks_token, databricks_host.")
+
+# COMMAND ----------
+
+

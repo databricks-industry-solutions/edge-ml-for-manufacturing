@@ -15,7 +15,7 @@ pool:
 
 steps:
 
-- script: echo Parameters sent to pipeline ${{ parameters.run_id}} and ${{ parameters.model_version}}
+- script: echo Parameters sent to pipeline ${{ parameters.run_id }} and ${{ parameters.model_version }}
   displayName: 'Display parameters'
   
 - task: DockerInstaller@0
@@ -27,10 +27,10 @@ steps:
   enabled: 'true'
 
 - script: |
-    export MLFLOW_TRACKING_URI=$(MLFLOW_TRACKING)
-    export DATABRICKS_HOST=$(DATABRICKS_HOST)
-    export DATABRICKS_TOKEN=$(DATABRICKS_TOKEN)
-    mlflow artifacts download -r "${{ parameters.run_id}}" -d "model_dir"
+    export MLFLOW_TRACKING_URI=databricks
+    export DATABRICKS_HOST=${{ parameters.databricks_host }}
+    export DATABRICKS_TOKEN=${{ parameters.databricks_token }}
+    mlflow artifacts download -r "${{ parameters.run_id }}" -d "model_dir"
     ls -la
   displayName: 'Configure MLFlow environmental variables'
   enabled: 'true'
@@ -41,7 +41,7 @@ steps:
   enabled: 'true'
 
 - script: |
-    docker build -t "fedexdemoacr.azurecr.io/ml-model:v.${{ parameters.model_version}}" mlflow_docker/
+    docker build -t "solacc.azurecr.io/ml-model:v.${{ parameters.model_version }}" mlflow_docker/
   displayName: 'Create Docker Image'
   enabled: 'true'
 
@@ -49,7 +49,7 @@ steps:
 - task: Docker@2
   displayName: 'Push Docker Image to ACR'
   inputs:
-    containerRegistry: <CONTAINER_REGISTRY>
-    repository: <REPOSITORY_NAME>
+    containerRegistry: 'solacc'
+    repository: 'edge-ml-for-manufacturing'
     command: 'push'
-    tags: v.${{ parameters.model_version}}
+    tags: v.${{ parameters.model_version }}
