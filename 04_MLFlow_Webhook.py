@@ -73,7 +73,6 @@ job_json = {
 # COMMAND ----------
 
 # DBTITLE 1,We automate the creation of a simple job for Notebook 02
-
 nsc = NotebookSolutionCompanion()
 job_params = nsc.customize_job_json(job_json, "webhook-ml-edge-deploy", nsc.solacc_path, nsc.cloud)
 
@@ -97,37 +96,11 @@ job_webhook = RegistryWebhooksClient().create_webhook(
 
 print(job_webhook)
 
-
-# http_webhook = RegistryWebhooksClient().create_webhook(
-#   events=["TRANSITION_REQUEST_CREATED", "MODEL_VERSION_TRANSITIONED_TO_PRODUCTION"],
-#   http_url_spec=http_url_spec,
-#   model_name=model_name,
-#   status="TEST_MODE"
-# )
-# http_webhook
-
 # COMMAND ----------
 
-# Uncomment code below to test a particular webhook that was previously created by passing the webhook id
-vtest = RegistryWebhooksClient().test_webhook(job_webhook.id)
-vtest
-
-# COMMAND ----------
-
-# Uncomment code below to list any webhooks created for a particular model
 RegistryWebhooksClient().list_webhooks(model_name=model_name)
-
-# COMMAND ----------
-
-# Uncomment code below to transition a webhook from "TEST_MODE" to "ACTIVE"
-
-# http_webhook = RegistryWebhooksClient().update_webhook(
-#   id=job_webhook.id,
-#   status="ACTIVE"
-# )
 
 # COMMAND ----------
 
 # Uncomment code below to delete any webhook by providing the webhook id
 # RegistryWebhooksClient().delete_webhook(id=job_webhook.id)
-

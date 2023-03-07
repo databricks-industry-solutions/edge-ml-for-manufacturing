@@ -119,24 +119,7 @@ model_details = mlflow.register_model(model_uri=model_uri, name=model_name)
 
 # COMMAND ----------
 
-client = MlflowClient()
-# archive any production versions of the model from prior runs
-for mv in client.search_model_versions("name='{0}'".format(model_name)):
-  
-    # if model with this name is marked production
-    if mv.current_stage.lower() == 'production':
-      # mark is as archived
-      client.transition_model_version_stage(
-        name=model_name,
-        version=mv.version,
-        stage='archived'
-        )
-        
-client.transition_model_version_stage(
-  name=model_details.name,
-  version=model_details.version,
-  stage='Production',
-)
+# MAGIC %md 
 
 # COMMAND ----------
 
