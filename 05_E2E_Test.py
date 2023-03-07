@@ -15,6 +15,6 @@ model_details = client.get_latest_versions(model_name)[0]
 client.transition_model_version_stage(
   name=model_details.name,
   version=model_details.version,
-  stage='Production',
-  archive=True
+  stage='Production',  
+  archive_existing_versions=True
 )
