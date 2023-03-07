@@ -45,9 +45,9 @@ job_json = {
       {
           "job_cluster_key": "edge_ml_cluster",
           "notebook_task": {
-              "notebook_path": f"02_Trigger_AzureDevOps_Job"
+              "notebook_path": f"03_Trigger_AzureDevOps_Job"
           },
-          "task_key": "edge_ml_02"
+          "task_key": "edge_ml_03"
       }
   ],
   "job_clusters": [
