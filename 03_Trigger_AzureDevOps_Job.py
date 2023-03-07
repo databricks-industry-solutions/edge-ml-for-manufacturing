@@ -14,14 +14,9 @@
 
 # COMMAND ----------
 
-# Create a notebook widget to receive event message from MLFlow Webhook
-dbutils.widgets.text("event_message", "")
-
-# COMMAND ----------
-
 # Install azure-devops python package
 
-pip install azure-devops
+%pip install azure-devops
 
 # COMMAND ----------
 
@@ -70,9 +65,11 @@ print(run_id)
 
 # COMMAND ----------
 
-# Set access token and organization URL variables by retrieving values from Secrets store
-access_token = dbutils.secrets.get(scope = "<SECRET_SCOPE>", key = "<SECRET_KEY>")
-organization_url = dbutils.secrets.get(scope = "<SECRET_SCOPE>", key = "<SECRET_KEY>")
+# Set access token and organization URL variables by retrieving values from Secrets scope
+access_token = dbutils.secrets.get(scope = "solution-accelerator-cicd", key = "azure_devops_access_token")
+organization_url = dbutils.secrets.get(scope = "solution-accelerator-cicd", key = "azure_devops_organization_url") 
+azure_devops_project = dbutils.secrets.get(scope = "solution-accelerator-cicd", key = "azure_devops_project") 
+azure_devops_pipeline_id = dbutils.secrets.get(scope = "solution-accelerator-cicd", key = "azure_devops_pipeline_id")
 
 # Create a connection to the Azure DevOps Org
 credentials = BasicAuthentication('', access_token)
@@ -85,7 +82,7 @@ pipeline_client = connection.clients_v6_0.get_pipelines_client()
 run_parameters = RunPipelineParameters(template_parameters = {"run_id":run_id, "model_version":model_version})
 
 # Trigger pipeline
-runPipeline = pipeline_client.run_pipeline(run_parameters=run_parameters,project="<AZURE_DEVOPS_PROJECT_", pipeline_id=<AZURE_DEVOPS_PIPELINE_ID>)
+runPipeline = pipeline_client.run_pipeline(run_parameters=run_parameters,project=azure_devops_project, pipeline_id=azure_devops_pipeline_id)
 print("Pipeline has been triggered")
 
 

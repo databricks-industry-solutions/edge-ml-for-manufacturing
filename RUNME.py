@@ -35,7 +35,11 @@ from solacc.companion import NotebookSolutionCompanion
 # MAGIC %md
 # MAGIC 
 # MAGIC ## Set up secrets
-# MAGIC Before setting up the rest of the accelerator, we need set up a few credentials in order to access ___. Grab an ___ key for your ___ account ([documentation](https://www.kaggle.com/docs/api#getting-started-installation-&-authentication) here). Here we demonstrate using the [Databricks Secret Scope](https://docs.databricks.com/security/secrets/secret-scopes.html) for credential management. 
+# MAGIC Before setting up the rest of the accelerator, we need set up a few credentials in order to access Azure DevOps.
+# MAGIC 
+# MAGIC Please follow the steps in the blog to create the Azure DevOps pipeline. Once the pipeline gets created in Azure DevOps, we will need to obtain an access token that we can use to trigger the pipeline from Databricks. Please follow these [steps](https://learn.microsoft.com/en-us/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate?view=azure-devops&tabs=Windows) to obtain the token. You will also need to obtain the name of the Azure DevOps Project, the Azure DevOps’s organization URL and the Pipeline ID. 
+# MAGIC 
+# MAGIC Here we demonstrate using the [Databricks Secret Scope](https://docs.databricks.com/security/secrets/secret-scopes.html) for credential management. 
 # MAGIC 
 # MAGIC Copy the block of code below, replace the name the secret scope and fill in the credentials and execute the block. After executing the code, The accelerator notebook will be able to access the credentials it needs.
 # MAGIC 
@@ -48,13 +52,13 @@ from solacc.companion import NotebookSolutionCompanion
 # MAGIC   pass
 # MAGIC client.execute_post_json(f"{client.endpoint}/api/2.0/secrets/put", {
 # MAGIC   "scope": "solution-accelerator-cicd",
-# MAGIC   "key": "kaggle_username",
+# MAGIC   "key": "azure_devops_access_token",
 # MAGIC   "string_value": "____"
 # MAGIC })
 # MAGIC 
 # MAGIC client.execute_post_json(f"{client.endpoint}/api/2.0/secrets/put", {
 # MAGIC   "scope": "solution-accelerator-cicd",
-# MAGIC   "key": "kaggle_key",
+# MAGIC   "key": "azure_devops_organization_url",
 # MAGIC   "string_value": "____"
 # MAGIC })
 # MAGIC ```
@@ -66,29 +70,53 @@ job_json = {
         "max_concurrent_runs": 1,
         "tags": {
             "usage": "solacc_testing",
-            "group": "SOLACC",
-            "accelerator": "sample-solacc"
+            "group": "MFG",
+            "accelerator": "edge-ml-for-manufacturing"
         },
         "tasks": [
             {
                 "job_cluster_key": "edge_ml_cluster",
                 "notebook_task": {
-                    "notebook_path": f"01_mlflow-webhook-example"
+                    "notebook_path": f"01_ML_Model_Trainer"
                 },
                 "task_key": "edge_ml_01"
             },
-            # {
-            #     "job_cluster_key": "edge_ml_cluster",
-            #     "notebook_task": {
-            #         "notebook_path": f"02_Analysis"
-            #     },
-            #     "task_key": "edge_ml_02",
-            #     "depends_on": [
-            #         {
-            #             "task_key": "edge_ml_01"
-            #         }
-            #     ]
-            # }
+            {
+              "job_cluster_key": "edge_ml_cluster",
+              "notebook_task": {
+                  "notebook_path": f"02_AZDevOps"
+              },
+              "task_key": "edge_ml_02",
+              "depends_on": [
+                  {
+                      "task_key": "edge_ml_01"
+                  }
+              ]
+            },
+            {
+              "job_cluster_key": "edge_ml_cluster",
+              "notebook_task": {
+                  "notebook_path": f"04_MLFlow_Webhook"
+              },
+              "task_key": "edge_ml_04",
+              "depends_on": [
+                  {
+                      "task_key": "edge_ml_02"
+                  }
+              ]
+            },
+            {
+              "job_cluster_key": "edge_ml_cluster",
+              "notebook_task": {
+                  "notebook_path": f"05_E2E_Test"
+              },
+              "task_key": "edge_ml_05",
+              "depends_on": [
+                  {
+                      "task_key": "edge_ml_04"
+                  }
+              ]
+            }
         ],
         "job_clusters": [
             {

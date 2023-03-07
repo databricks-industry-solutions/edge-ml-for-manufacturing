@@ -27,11 +27,14 @@ from pyspark.sql.types import *
 from pyspark.sql.functions import *
 import mlflow.spark
 import mlflow.sklearn
+from mlflow.tracking.client import MlflowClient
 
 # Turn on MLFLow's autologging of parameters from Spark
 mlflow.spark.autolog()
 
-spark.conf.set("spark.databricks.io.cache.enabled", True)
+# COMMAND ----------
+
+# MAGIC %run ./config/notebook_config
 
 # COMMAND ----------
 
@@ -111,6 +114,13 @@ with mlflow.start_run(run_name = "skl_randfor_autolog"):
 
 # COMMAND ----------
 
-model_name = "sensor_model"
 model_uri = "runs:/{run_id}/model".format(run_id=run_id)
 model_details = mlflow.register_model(model_uri=model_uri, name=model_name)
+
+# COMMAND ----------
+
+# MAGIC %md 
+
+# COMMAND ----------
+
+
