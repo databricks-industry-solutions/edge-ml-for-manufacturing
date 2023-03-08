@@ -3,10 +3,23 @@
 [![CLOUD](https://img.shields.io/badge/CLOUD-ALL-blue?logo=googlecloud&style=for-the-badge)](https://cloud.google.com/databricks)
 [![POC](https://img.shields.io/badge/POC-10_days-green?style=for-the-badge)](https://databricks.com/try-databricks)
 
-*Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.*
+## Deploying and Maintaining Machine Learning Models on the "Edge" in Manufacturing
+
+Edge computing is a computing paradigm that refers to devices that store, process data and make decisions very close to where that data is being generated. Edge computing has existed for a long time but the “Edge” has become more relevant over the last few years as more companies move their storage and compute capacity to the cloud but still have the need to keep some compute processing running on-premise to meet certain business or technical requirements. In manufacturing, it is very common to see local servers deployed at manufacturing sites that are used to collect and store data from various machines/sensors in a manufacturing plant and apply AI/ML models to incoming data to analyze patterns and anomalies in the data.
+
+There are many different reasons why manufacturers may decide to deploy machine learning (ML) models and other analytics solutions directly to the Edge:
+- **Unreliable connectivity to the cloud:** Depending on the manufacturing plant's location and/or conditions, connectivity issues may result in unstable communication with the cloud, impacting the effectiveness of any critical predictive maintenance model that attempts to prevent catastrophic failures.
+- **Latency requirements:** Some use cases require low-latency responses. For example, a computer vision use case that looks for common product defects as they are being manufactured will need to quickly make decisions to remove faulty parts from the manufacturing line for further inspection. 
+- **Security:** Due to compliance and security requirements (Purdue model, ISA95, etc), some of the shop floor systems are not permitted to connect directly to the internet. In those scenarios, there is a need to perform inference on-premise without having to send data over the internet. 
+
+In this article, we discuss how manufacturers are taking advantage of the cloud and delivering analytics and AI solutions to Edge devices using standard patterns. There are different ways to push models to the edge but in this solution acceleator, we will leverage Docker to deliver ML models built on Databricks down to the Edge.
+
+The main advantages of using Docker are its portability and consistency - Docker containers are platform-agnostic and they make it very easy to package and deploy the ML model along with all its dependencies and configuration from Databricks to an on-premise server. Docker is a great option for deploying ML models to on-premise servers with sufficient CPU, memory, and storage capacity. However, Docker is not the answer to every Edge use case and there are other technologies/frameworks available such as TensorFlow Lite or PyTorch Mobile that were specifically designed to deploy ML models to microcontrollers and other embedded edge devices with storage, memory and CPU constraints.
+
+
 
 ___
-<john.doe@databricks.com>
+<andres.urrutia@databricks.com>
 
 ___
 
