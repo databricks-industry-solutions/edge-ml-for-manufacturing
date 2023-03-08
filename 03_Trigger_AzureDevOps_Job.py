@@ -36,7 +36,7 @@ import json
 # COMMAND ----------
 
 # Capture event message from MLFlow Webhook payload
-
+dbutils.widgets.text("event_message", "")
 webhook_payload = dbutils.widgets.get("event_message")
 webhook_payload = webhook_payload.replace('\\','')
 print(webhook_payload)
@@ -73,7 +73,7 @@ print(run_id)
 access_token = dbutils.secrets.get(scope = "solution-accelerator-cicd", key = "azure_devops_access_token")
 organization_url = dbutils.secrets.get(scope = "solution-accelerator-cicd", key = "azure_devops_organization_url") 
 azure_devops_project = dbutils.secrets.get(scope = "solution-accelerator-cicd", key = "azure_devops_project") 
-azure_devops_pipeline_id = dbutils.secrets.get(scope = "solution-accelerator-cicd", key = "azure_devops_pipeline_id")
+azure_devops_pipeline_id = "1"
 
 # Create a connection to the Azure DevOps Org
 credentials = BasicAuthentication('', access_token)
