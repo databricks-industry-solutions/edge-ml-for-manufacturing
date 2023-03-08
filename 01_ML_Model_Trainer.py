@@ -7,7 +7,7 @@
 # MAGIC 
 # MAGIC 
 # MAGIC ### TODO add image from blog
-# MAGIC <img 
+# MAGIC <img src="https://github.com/databricks-industry-solutions/edge-ml-for-manufacturing/blob/main/images/edge_diagram.png?raw=true" />
 # MAGIC      
 # MAGIC The ML-optimized runtime in Databricks contains popular ML frameworks such as PyTorch, TensorFlow, and scikit-learn. We will build a basic Random Forest ML model in Databricks that will later be deployed to edge devices to execute inferences directly on the manufacturing floor. This solution accelerator will focus on deploying an ML Model built on Databricks to edge devices. 
 
@@ -16,7 +16,9 @@
 # MAGIC %md
 # MAGIC ### Generate sample data to be used throughout the rest of the notebook
 # MAGIC 
-# MAGIC To build an ML Model, we need a dataset that we can use to train the model. The next few cells will generate artificial "IoT/Sensor" data that we'll be used to train a Random Forest.
+# MAGIC Before data scientists can start working on building ML models, the first step in any data solution is to let the data engineers build reliable pipelines to ingest and transform the bronze (raw data) into the silver and gold datasets that can be used by downstream processes (see medallion architecture) and by data scientists that want to analyze and use the data to build ML models. The Delta Live Tables framework makes it very easy to build and manage these ETL pipelines. 
+# MAGIC 
+# MAGIC However, we will not discuss ETL or Delta Live Tables as we are only focusing on the actual deployment of ML models to the Edge. The next few cells will generate artificial "IoT/Sensor" data coming from machines located on the shop floor of a manufacturing plant. We'll then use that data to train a Random Forest that will be deployed to an edge device.
 
 # COMMAND ----------
 
@@ -61,7 +63,7 @@ display(data_df)
 # MAGIC 
 # MAGIC ### Create training and test datasets
 # MAGIC 
-# MAGIC It is always a best practice to split up the input dataset into train and test datasets. The code below will split that up and will allocate 70% of the records to the training dataset to build the ML model and 30% to the testing dataset that can be used later to evaluate the performance of the model.
+# MAGIC It is always a best practice to split up the input dataset into train and test datasets. The code below will split that up and will allocate 70% of the records to the training dataset to build the ML model and 30% to the testing dataset that can be used later to evaluate the performance of the model. Keep in mind that this data was artificially generated and in a real-world environment there are better approaches to properly split time-series data. This Solution Accelearator is focused on ML Edge deployment and not on best practices for building/training ML models.
 
 # COMMAND ----------
 
@@ -110,16 +112,10 @@ with mlflow.start_run(run_name = "skl_randfor_autolog"):
 # MAGIC ### Register ML Model
 # MAGIC 
 # MAGIC Finally, we'll use the run_id of the model we just built to register that model into the MLFlow Registry. The edge devices can now download this model directly from MLFlow to run locally in those devices.
+# MAGIC 
+# MAGIC In the Databricks UI, you should now see a new model registered on the “Models” page. As the model improves and evolves (with new data or better algorithms), new versions of the model can be created and they will be displayed on this page as well.
 
 # COMMAND ----------
 
 model_uri = "runs:/{run_id}/model".format(run_id=run_id)
 model_details = mlflow.register_model(model_uri=model_uri, name=model_name)
-
-# COMMAND ----------
-
-# MAGIC %md 
-
-# COMMAND ----------
-
-
