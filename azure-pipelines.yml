@@ -49,11 +49,18 @@ steps:
   displayName: 'Create Docker Image'
   enabled: 'true'
 
-# Configure the settings for Docker task below to connect to your own Docker Registry or Azure Container Registry
 - task: Docker@2
-  displayName: 'Push Docker Image to ACR'
   inputs:
-    containerRegistry: 'solacc'
-    repository: 'edge-ml-for-manufacturing'
-    command: 'push'
-    tags: v.${{ parameters.model_version }}
+    containerRegistry: 'solacc_acr'
+    repository: 'ml_model'
+    command: 'buildAndPush'
+    Dockerfile: '**/Dockerfile'
+    
+# Configure the settings for Docker task below to connect to your own Docker Registry or Azure Container Registry
+# - task: Docker@2
+#   displayName: 'Push Docker Image to ACR'
+#   inputs:
+#     containerRegistry: 'solacc'
+#     repository: 'edge-ml-for-manufacturing'
+#     command: 'push'
+#     tags: v.${{ parameters.model_version }}
