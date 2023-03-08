@@ -6,6 +6,10 @@ parameters:
   type: string
 - name: model_version
   type: string
+- name: databricks_host
+  type: string
+- name: databricks_token
+  type: string
 
 trigger:
 - none
