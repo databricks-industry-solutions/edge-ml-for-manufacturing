@@ -73,7 +73,7 @@ print(run_id)
 access_token = dbutils.secrets.get(scope = "solution-accelerator-cicd", key = "azure_devops_access_token")
 organization_url = dbutils.secrets.get(scope = "solution-accelerator-cicd", key = "azure_devops_organization_url") 
 azure_devops_project = dbutils.secrets.get(scope = "solution-accelerator-cicd", key = "azure_devops_project") 
-azure_devops_pipeline_id = "3" # enter your own pipeline id here. When you navigate to the pipeline page in Azure DevOps, this number is available in the url as definitionId. For instance, our url ended with `?definitionId=3`
+azure_devops_pipeline_id = "3" # enter your own pipeline id here. When you navigate to the pipeline page in Azure DevOps, this number is available in the url as definitionId. For instance, our pipeline url ended with `?definitionId=3`
 
 # Create a connection to the Azure DevOps Org
 credentials = BasicAuthentication('', access_token)
