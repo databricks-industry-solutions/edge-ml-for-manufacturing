@@ -20,6 +20,10 @@
 
 # COMMAND ----------
 
+# MAGIC %run ./config/notebook_config
+
+# COMMAND ----------
+
 # Import all required libraries to parse parameters and connect to Azure DevOps
 
 from azure.devops.connection import Connection
