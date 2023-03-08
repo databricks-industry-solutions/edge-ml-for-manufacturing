@@ -51,8 +51,8 @@ steps:
 
 - task: Docker@2
   inputs:
-    containerRegistry: 'solacc_acr'
-    repository: 'ml_model'
+    containerRegistry: 'dbbnicole'
+    repository: 'edge-ml-for-manufacturing'
     command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
     

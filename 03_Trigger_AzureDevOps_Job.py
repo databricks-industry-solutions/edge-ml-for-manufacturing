@@ -73,7 +73,7 @@ print(run_id)
 access_token = dbutils.secrets.get(scope = "solution-accelerator-cicd", key = "azure_devops_access_token")
 organization_url = dbutils.secrets.get(scope = "solution-accelerator-cicd", key = "azure_devops_organization_url") 
 azure_devops_project = dbutils.secrets.get(scope = "solution-accelerator-cicd", key = "azure_devops_project") 
-azure_devops_pipeline_id = "1"
+azure_devops_pipeline_id = "2"
 
 # Create a connection to the Azure DevOps Org
 credentials = BasicAuthentication('', access_token)
@@ -96,3 +96,7 @@ print("Pipeline has been triggered")
 # MAGIC Once the job gets created, you can open the job details in Databricks UI and capture the Job ID located on the top right corner of the window. This Job ID will be used in the next section.
 # MAGIC 
 # MAGIC ###TODO grab the image from blog
+
+# COMMAND ----------
+
+
