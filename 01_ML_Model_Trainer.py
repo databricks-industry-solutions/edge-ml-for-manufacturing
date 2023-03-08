@@ -8,7 +8,6 @@
 # MAGIC 
 # MAGIC ### TODO add image from blog
 # MAGIC <img 
-# MAGIC 
 # MAGIC      
 # MAGIC The ML-optimized runtime in Databricks contains popular ML frameworks such as PyTorch, TensorFlow, and scikit-learn. We will build a basic Random Forest ML model in Databricks that will later be deployed to edge devices to execute inferences directly on the manufacturing floor. This solution accelerator will focus on deploying an ML Model built on Databricks to edge devices. 
 
