@@ -52,8 +52,8 @@ steps:
   inputs:
     containerRegistry: 'solacc_acr'
     repository: 'ml-model'
-    command: 'buildAndPush'
-    Dockerfile: '**/Dockerfile'
+    command: 'push'
+    tags: 'v.${{ parameters.model_version }}'
     
 # Configure the settings for Docker task below to connect to your own Docker Registry or Azure Container Registry
 # - task: Docker@2
