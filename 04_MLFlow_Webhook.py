@@ -4,12 +4,12 @@
 # MAGIC 
 # MAGIC MLflow webhooks enable you to listen to Model Registry events, such as when a model version is created or when that version is transitioned into a production environment, to automatically trigger actions. These webhooks allow you to automate your MLOps processes and integrate your machine learning pipeline with other CI/CD tools such as Azure DevOps. In this scenario, we will trigger the Azure DevOps pipeline that creates and uploads the Docker image anytime a version of our ML Model is transitioned into the production stage.
 # MAGIC 
-# MAGIC MLflow webhooks can be created through the Databricks REST API or using the Python library databricks-registry-webhooks. Here is the important section of Python code that creates the MLflow webhook to track when the “sensor_model” gets transitioned into production.
+# MAGIC MLflow webhooks can be created through the Databricks REST API or using the Python library `databricks-registry-webhooks`. Here is the important section of Python code that creates the MLflow webhook to track when the “sensor_model” gets transitioned into production.
 
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC To call the Databricks Job, we pass the Job ID we captured earlier to the JobSpec function. There are multiple Webhook events that can be configured such as when a new version of the ML model gets created (MODEL_VERSION_CREATED) or when a new ML model is registered in MLFlow registry (REGISTERED_MODEL_CREATED). For this example, we are configuring the Webhook to be triggered anytime a version of the ML model is transitioned into the production stage.
+# MAGIC To call the Databricks Job, we pass the Job ID we captured earlier to the JobSpec function. There are multiple Webhook events that can be configured such as when a new version of the ML model gets created (MODEL_VERSION_CREATED) or when a new ML model is registered in MLflow registry (REGISTERED_MODEL_CREATED). For this example, we are configuring the Webhook to be triggered anytime a version of the ML model is transitioned into the production stage.
 
 # COMMAND ----------
 
