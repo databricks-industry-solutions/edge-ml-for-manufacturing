@@ -5,11 +5,9 @@
 # MAGIC 
 # MAGIC Edge computing is a computing paradigm that refers to devices that store, process data and make decisions very close to where that data is being generated. Edge computing has existed for a long time but the “Edge” has become more relevant over the last few years as more companies move their storage and compute capacity to the cloud but still have the need to keep some compute processing running on-premise to meet certain business or technical requirements. In manufacturing, it is very common to see local servers deployed at manufacturing sites that are used to collect and store data from various machines/sensors in a manufacturing plant and apply AI/ML models to incoming data to analyze patterns and anomalies in the data.
 # MAGIC 
-# MAGIC 
-# MAGIC ### TODO add image from blog
-# MAGIC <img src="https://github.com/databricks-industry-solutions/edge-ml-for-manufacturing/blob/main/images/edge_diagram.png?raw=true" />
+# MAGIC <img src="https://github.com/databricks-industry-solutions/edge-ml-for-manufacturing/blob/main/images/edge_diagram.png?raw=true" width=75%/>
 # MAGIC      
-# MAGIC The ML-optimized runtime in Databricks contains popular ML frameworks such as PyTorch, TensorFlow, and scikit-learn. We will build a basic Random Forest ML model in Databricks that will later be deployed to edge devices to execute inferences directly on the manufacturing floor. This solution accelerator will focus on deploying an ML Model built on Databricks to edge devices. 
+# MAGIC The ML-optimized runtime in Databricks contains popular ML frameworks such as PyTorch, TensorFlow, and scikit-learn. In this solution accelerator, we will build a basic Random Forest ML model in Databricks that will later be deployed to edge devices to execute inferences directly on the manufacturing shop floor. The focus will essentially be the deployment of ML Model built on Databricks to edge devices. 
 
 # COMMAND ----------
 
@@ -18,7 +16,7 @@
 # MAGIC 
 # MAGIC Before data scientists can start working on building ML models, the first step in any data solution is to let the data engineers build reliable pipelines to ingest and transform the bronze (raw data) into the silver and gold datasets that can be used by downstream processes (see medallion architecture) and by data scientists that want to analyze and use the data to build ML models. The Delta Live Tables framework makes it very easy to build and manage these ETL pipelines. 
 # MAGIC 
-# MAGIC However, we will not discuss ETL or Delta Live Tables as we are only focusing on the actual deployment of ML models to the Edge. The next few cells will generate artificial "IoT/Sensor" data coming from machines located on the shop floor of a manufacturing plant. We'll then use that data to train a Random Forest that will be deployed to an edge device.
+# MAGIC However, we will not discuss ETL or Delta Live Tables as we are only focusing on the actual deployment of ML models to the Edge. The next few cells will generate artificial IoT sensor data coming from machines located on the shop floor of a manufacturing plant. We will then use that data to train a Random Forest that will be deployed to an edge device.
 
 # COMMAND ----------
 
@@ -40,7 +38,7 @@ mlflow.spark.autolog()
 # COMMAND ----------
 
 # MAGIC %md
-# MAGIC The code below will create a synthetic Spark Dataframe with 10 million rows. Each row will contain randomly generated data from 5 sensors. The ML Model that will train below will attempt to predict the value of sensor 5 using the other 4 sensors as inputs to the model.
+# MAGIC The code below will create a synthetic Spark\\({^T}{^M}\\) Dataframe with 10 million rows. Each row will contain randomly generated data from 5 sensors. The ML Model that will train below will attempt to predict the value of sensor 5 using the other 4 sensors as inputs to the model.
 
 # COMMAND ----------
 
@@ -63,7 +61,7 @@ display(data_df)
 # MAGIC 
 # MAGIC ### Create training and test datasets
 # MAGIC 
-# MAGIC It is always a best practice to split up the input dataset into train and test datasets. The code below will split that up and will allocate 70% of the records to the training dataset to build the ML model and 30% to the testing dataset that can be used later to evaluate the performance of the model. Keep in mind that this data was artificially generated and in a real-world environment there are better approaches to properly split time-series data. This Solution Accelearator is focused on ML Edge deployment and not on best practices for building/training ML models.
+# MAGIC It is always a best practice to split up the input dataset into train and test datasets. The code below will split that up and will allocate 70% of the records to the training dataset to build the ML model and 30% to the testing dataset that can be used later to evaluate the performance of the model. Keep in mind that this data was artificially generated and in a real-world environment there are other approaches to properly split time-series data, keeping in mind that the focus of this solution accelerator is on edge model deployment.
 
 # COMMAND ----------
 
@@ -85,7 +83,7 @@ train_x, test_x, train_y, test_y = train_test_split(x,y,test_size=0.30, random_s
 # MAGIC 
 # MAGIC ### Build a simple ML Random Forest model
 # MAGIC 
-# MAGIC We will now create a Random Forest algorithm using the training dataset and track the whole experiment using MLFlow autologging capabilities.
+# MAGIC We will now create a Random Forest algorithm using the training dataset and track the whole experiment using MLflow autologging capabilities.
 
 # COMMAND ----------
 
@@ -111,7 +109,7 @@ with mlflow.start_run(run_name = "skl_randfor_autolog"):
 # MAGIC %md
 # MAGIC ### Register ML Model
 # MAGIC 
-# MAGIC Finally, we'll use the run_id of the model we just built to register that model into the MLFlow Registry. The edge devices can now download this model directly from MLFlow to run locally in those devices.
+# MAGIC Finally, we will use the `run_id` of the model we just built to register that model into the MLflow Registry. The edge devices can now download this model directly from MLflow to run locally in those devices.
 # MAGIC 
 # MAGIC In the Databricks UI, you should now see a new model registered on the “Models” page. As the model improves and evolves (with new data or better algorithms), new versions of the model can be created and they will be displayed on this page as well.
 
