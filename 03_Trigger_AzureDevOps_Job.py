@@ -10,7 +10,7 @@
 # MAGIC 
 # MAGIC ### Define Parameters, install Azure DevOps package and import Python libraries
 # MAGIC 
-# MAGIC An MLFlow webhook will call this notebook and will pass a message as a parameter with the information of the trigger event. We will create a parameter in the notebook using the Databricks Widgets API to capture that message and use throughout the notebook. We also have to install the azure-devops package use PIP and then import the required libraries to authenticate against Azure DevOps and trigger the CI/CD pipeline.
+# MAGIC An MLflow webhook will call this notebook and will pass a message as a parameter with the information of the trigger event. We will create a parameter in the notebook using the Databricks Widgets API to capture that message and use throughout the notebook. We also have to install the `azure-devops` package use `pip` and then import the required libraries to authenticate against Azure DevOps and trigger the CI/CD pipeline.
 
 # COMMAND ----------
 
@@ -54,7 +54,7 @@ print(model_name)
 # MAGIC 
 # MAGIC ### Trigger Azure DevOps Pipeline
 # MAGIC 
-# MAGIC After capturing the model name that triggered this Databricks job, we can now retrieve the run_id and the version of the model. We will pass those two as parameters when triggering the Azure DevOps Pipeline.
+# MAGIC After capturing the model name that triggered this Databricks job, we can now retrieve the `run_id` and the version of the model. We will pass those two as parameters when triggering the Azure DevOps pipeline.
 # MAGIC 
 # MAGIC Additionally, we need to retrieve the access token and organization url values that were previously set in a secret scope. With all these values we can now trigger the Azure DevOps pipeline.
 
@@ -95,4 +95,4 @@ print("Pipeline has been triggered")
 # MAGIC %md
 # MAGIC Once the job gets created, you can open the job details in Databricks UI and capture the Job ID located on the top right corner of the window. This Job ID will be used in the next section.
 # MAGIC 
-# MAGIC ###TODO grab the image from blog
+# MAGIC <img src="https://github.com/databricks-industry-solutions/edge-ml-for-manufacturing/blob/main/images/job_details.png?raw=true" width=75%/>
