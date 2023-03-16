@@ -27,7 +27,32 @@
 # COMMAND ----------
 
 # MAGIC %md
+# MAGIC ### Create Databricks Token
 # MAGIC 
-# MAGIC ### Create and Configure Azure DevOps Pipeline
+# MAGIC Azure DevOps needs to be able to authenticate to Databricks to download the ML Model. A Databricks Access Token gives programmatic access to the Databricks and the managed MLFlow Registry. Follow [these steps](https://learn.microsoft.com/en-us/azure/databricks/dev-tools/auth#--azure-databricks-personal-access-tokens) to generate an Access Token using the Databricks UI.
 # MAGIC 
+# MAGIC Make note of that token and the Databricks Workspace URL before continuing to the next section below.
+
+# COMMAND ----------
+
+# MAGIC %md
+# MAGIC 
+# MAGIC ### Configure Azure DevOps Pipeline
+# MAGIC 
+# MAGIC #### Create Pipeline
 # MAGIC The Azure DevOps Pipeline we are building will download the ML model artifacts from the MLflow registry and then create a Docker image that exposes the model to receive HTTP REST calls. Follow these steps to create an [Azure DevOps Pipeline](https://learn.microsoft.com/en-us/azure/devops/pipelines/create-first-pipeline?view=azure-devops&tabs=java%2Ctfs-2018-2%2Cbrowser) and then copy/paste the YAML file that is included in the [Github repository](https://github.com/databricks-industry-solutions/edge-ml-for-manufacturing/blob/main/azure-pipelines.yml) for this Solution Accelerator. The pipeline should look something like this:
+# MAGIC 
+# MAGIC <img src="https://github.com/databricks-industry-solutions/edge-ml-for-manufacturing/blob/main/images/ado_pipeline.png?raw=true" width="80%">
+# MAGIC 
+# MAGIC #### Update Pipeline
+# MAGIC 
+# MAGIC Make sure to update these values in the pipeline as follows:
+# MAGIC 
+# MAGIC - `MLFLOW_TRACKING_URI`: The value of this variable should be `databricks`
+# MAGIC - `DATABRICKS_HOST`: Enter the Databricks Workspace URL that was captured earlier It should look something similar this: `https://adb-254883549138.18.azuredatabricks.net/`
+# MAGIC - `DATABRICKS_TOKEN`: Enter the Databricks Token that was generated in the previous step
+# MAGIC 
+# MAGIC The Azure Container Registry (ACR) URL and Azure DevOps task that connects the Pipeline to that ACR needs to be updated as well:
+# MAGIC 
+# MAGIC 1. Find the `Create Docker Image` step in the YAML file and replace the URL `solacc.azurecr.io` with the URL of the Azure Container Registry that was previously deployed
+# MAGIC 2. Delete whole task called `Push Docker Image to ACR` and create a new one that connects to the Azure Container Registry. More information on how to create that task can be found [here](https://learn.microsoft.com/en-us/azure/devops/pipelines/ecosystems/containers/acr-template?view=azure-devops)
