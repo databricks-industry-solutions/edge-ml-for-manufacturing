@@ -1,8 +1,8 @@
 # Databricks notebook source
 # MAGIC %md
-# MAGIC ### Integratin with Azure DevOps and Azure Container Registry
+# MAGIC ### Integrating with Azure DevOps and Azure Container Registry
 # MAGIC 
-# MAGIC This section of the Solution Accelerator is be done outside Databricks. We are using Azure DevOps as the CI/CD tool to download, test and push a Docker image containing the ML model to an Azure Container Registry. Although we are leveraging this Azure services to build the automation, the pattern we are presenting here does not depend on any of those services, and other CI/CD solutions and/or image repositories such as Jenkins and Docker registry are fully supported as well.
+# MAGIC This section of the Solution Accelerator is be done outside Databricks. We are using Azure DevOps as the CI/CD tool to download, test and push a Docker image containing the ML model to an Azure Container Registry. Although we are leveraging this Azure services to build the automation, the pattern we are presenting here does not depend on any of those services, and other CI/CD solutions and/or image repositories such as Jenkins and Docker registry are fully supported as well. This automated deployment pipeline we are building will help us scale the deployment of ML Models to multiple Edge devices.
 # MAGIC 
 # MAGIC More information on how to create an Azure DevOps Organization and how to deploy Azure Container Registry can be found at the following links:
 # MAGIC 
@@ -29,3 +29,5 @@
 # MAGIC %md
 # MAGIC 
 # MAGIC ### Create and Configure Azure DevOps Pipeline
+# MAGIC 
+# MAGIC The Azure DevOps Pipeline we are building will download the ML model artifacts from the MLflow registry and then create a Docker image that exposes the model to receive HTTP REST calls. Follow these steps to create an [Azure DevOps Pipeline](https://learn.microsoft.com/en-us/azure/devops/pipelines/create-first-pipeline?view=azure-devops&tabs=java%2Ctfs-2018-2%2Cbrowser) and then copy/paste the YAML file that is included in the [Github repository](https://github.com/databricks-industry-solutions/edge-ml-for-manufacturing/blob/main/azure-pipelines.yml) for this Solution Accelerator. The pipeline should look something like this:
