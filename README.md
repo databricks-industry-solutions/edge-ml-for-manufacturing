@@ -23,7 +23,7 @@ ___
 
 ___
 
-<img alt="add_repo" src="https://github.com/databricks-industry-solutions/edge-ml-for-manufacturing/blob/main/images/edge-deployment-ref-diagram.png?raw=true"/>
+<img alt="add_repo" src="https://github.com/databricks-industry-solutions/edge-ml-for-manufacturing/blob/main/images/edge-deployment-ref-diagram.png?raw=true" width="90%"/>
 
 ___
 
