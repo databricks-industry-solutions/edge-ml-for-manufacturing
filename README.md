@@ -31,7 +31,7 @@ ___
 
 | library                                | description             | license    | source                                              |
 |----------------------------------------|-------------------------|------------|-----------------------------------------------------|
-| PyYAML                                 | Reading Yaml files      | MIT        | https://github.com/yaml/pyyaml                      |
+| azure-devops                                 | Azure DevOps Python API      | MIT        | https://github.com/microsoft/azure-devops-python-api/blob/dev/LICENSE                      |
 
 ## Getting started
 

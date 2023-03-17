@@ -108,24 +108,12 @@ job_json = {
             {
               "job_cluster_key": "edge_ml_cluster",
               "notebook_task": {
-                  "notebook_path": f"04_MLFlow_Webhook"
+                  "notebook_path": f"04_MLFlow_Webhook_E2E_Test"
               },
               "task_key": "edge_ml_04",
               "depends_on": [
                   {
                       "task_key": "edge_ml_02"
-                  }
-              ]
-            },
-            {
-              "job_cluster_key": "edge_ml_cluster",
-              "notebook_task": {
-                  "notebook_path": f"05_E2E_Test"
-              },
-              "task_key": "edge_ml_05",
-              "depends_on": [
-                  {
-                      "task_key": "edge_ml_04"
                   }
               ]
             }
