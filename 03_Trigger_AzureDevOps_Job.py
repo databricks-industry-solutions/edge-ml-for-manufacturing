@@ -57,6 +57,12 @@ print(model_name)
 # MAGIC After capturing the model name that triggered this Databricks job, we can now retrieve the `run_id` and the version of the model. We will pass those two as parameters when triggering the Azure DevOps pipeline.
 # MAGIC 
 # MAGIC Additionally, we need to retrieve the access token and organization url values that were previously set in a secret scope. With all these values we can now trigger the Azure DevOps pipeline.
+# MAGIC 
+# MAGIC **Note:** If you created your own Azure DevOps Organization and Pipeline in a previous step, replace the variables below with your own values:
+# MAGIC 
+# MAGIC - `organization_url`
+# MAGIC - `azure_devops_project`
+# MAGIC - `azure_devops_pipeline_id`
 
 # COMMAND ----------
 

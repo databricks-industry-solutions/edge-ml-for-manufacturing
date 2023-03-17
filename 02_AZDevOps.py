@@ -56,3 +56,18 @@
 # MAGIC 
 # MAGIC 1. Find the `Create Docker Image` step in the YAML file and replace the URL `solacc.azurecr.io` with the URL of the Azure Container Registry that was previously deployed
 # MAGIC 2. Delete whole task called `Push Docker Image to ACR` and create a new one that connects to the Azure Container Registry. More information on how to create that task can be found [here](https://learn.microsoft.com/en-us/azure/devops/pipelines/ecosystems/containers/acr-template?view=azure-devops)
+# MAGIC 
+# MAGIC #### Capture Pipeline Information
+# MAGIC 
+# MAGIC To trigger this Azure DevOps pipeline from Databricks, you will need to capture two values:
+# MAGIC 
+# MAGIC - **Azure DevOps Project Name:** Project Name was provided when you created the Azure DevOps organization and project in the previous step.
+# MAGIC - **Azure DevOps Organization URL:** Go to "Pipeline's Edit" page and look at the browser's URL. The first part of the URL will contain the organization's URL and it would look something similar to `http://dev.azure.com/{organization}`
+# MAGIC - **Pipeline ID:** The Pipeline ID can also be found in the browser's URL. In the "Pipeline's Edit" page, take a look at the URL and look for the number right after the `pipelineId` paramater. Make note of that number.
+
+# COMMAND ----------
+
+# MAGIC %md
+# MAGIC ### Create Databricks Job
+# MAGIC 
+# MAGIC Continue to the next notebook where you will create a Databricks Job that will trigger this Azure DevOps pipeline using the pipeline values that we just captured

@@ -19,6 +19,17 @@ from mlflow.tracking.client import MlflowClient
 
 # COMMAND ----------
 
+# MAGIC %md
+# MAGIC 
+# MAGIC To test the entire deployment process end-to-end all we need to know is to transition the ML Model to the **Production** stage using code below. As soon as that code gets executed:
+# MAGIC 
+# MAGIC 1. MLFlow Webhook triggers a Azure Databricks job and passes information about the model that trigger the webhook
+# MAGIC 2. Using the model information, the Databricks job retreives the "Run ID" and "Model Version" from the Model Registry and then triggers the Azure DevOps pipeline passing those values as parameters
+# MAGIC 3. Azure DevOps pipelines downloads ML Model with information it received from the Databricks job. It then creates a Docker image and pushes that image to the container registry tagging the image with the corresponding model version
+# MAGIC 4. Any Edge device can now download that model as a Docker container and perform local inference
+
+# COMMAND ----------
+
 client = MlflowClient()
 
 model_details = client.get_latest_versions(model_name)[0]
@@ -29,3 +40,7 @@ client.transition_model_version_stage(
   stage='Production',  
   archive_existing_versions=True
 )
+
+# COMMAND ----------
+
+
