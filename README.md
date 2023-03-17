@@ -23,8 +23,7 @@ ___
 
 ___
 
-
-IMAGE TO REFERENCE ARCHITECTURE
+<img alt="add_repo" src="https://github.com/databricks-industry-solutions/edge-ml-for-manufacturing/blob/main/images/edge-deployment-ref-diagram.png?raw=true" width=75%/>
 
 ___
 
