@@ -28,7 +28,7 @@
 
 from azure.devops.connection import Connection
 from msrest.authentication import BasicAuthentication
-from azure.devops.v6_0.pipelines.models import RunPipelineParameters,Variable
+from azure.devops.v7_0.pipelines.models import RunPipelineParameters,Variable
 import mlflow
 from mlflow import MlflowClient
 import json
