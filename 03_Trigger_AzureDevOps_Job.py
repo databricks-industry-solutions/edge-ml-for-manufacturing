@@ -16,7 +16,7 @@
 
 # Install azure-devops python package
 
-%pip install azure-devops
+%pip install azure-devops==6.0.0b4
 
 # COMMAND ----------
 
@@ -28,7 +28,7 @@
 
 from azure.devops.connection import Connection
 from msrest.authentication import BasicAuthentication
-from azure.devops.v7_0.pipelines.models import RunPipelineParameters,Variable
+from azure.devops.v6_0.pipelines.models import RunPipelineParameters,Variable
 import mlflow
 from mlflow import MlflowClient
 import json
@@ -86,7 +86,7 @@ credentials = BasicAuthentication('', access_token)
 connection = Connection(base_url=organization_url, creds=credentials)
 
 # Create a pipeline client
-pipeline_client = connection.clients_v7_0.get_pipelines_client()
+pipeline_client = connection.clients_v6_0.get_pipelines_client()
 
 # Define parameters that will be passed to the pipeline
 run_parameters = RunPipelineParameters(template_parameters = {"run_id":run_id, "model_version":model_version, "databricks_host": databricks_host, "databricks_token": databricks_token})
@@ -94,4 +94,7 @@ run_parameters = RunPipelineParameters(template_parameters = {"run_id":run_id, "
 # Trigger pipeline
 runPipeline = pipeline_client.run_pipeline(run_parameters=run_parameters,project=azure_devops_project, pipeline_id=azure_devops_pipeline_id)
 print("Pipeline has been triggered")
+
+# COMMAND ----------
+
 
