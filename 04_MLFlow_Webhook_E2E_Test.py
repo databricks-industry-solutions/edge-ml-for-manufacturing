@@ -135,7 +135,7 @@ from mlflow.tracking.client import MlflowClient
 
 client = MlflowClient()
 
-model_details = client.get_latest_versions(model_name)[0]
+model_details = client.get_latest_versions(model_name, stages=["None"])[0]
 
 client.transition_model_version_stage(
   name=model_details.name,

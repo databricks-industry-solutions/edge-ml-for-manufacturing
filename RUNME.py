@@ -64,12 +64,6 @@ from solacc.companion import NotebookSolutionCompanion
 # MAGIC 
 # MAGIC client.execute_post_json(f"{client.endpoint}/api/2.0/secrets/put", {
 # MAGIC   "scope": "solution-accelerator-cicd",
-# MAGIC   "key": "azure_devops_project",
-# MAGIC   "string_value": "____"
-# MAGIC })
-# MAGIC 
-# MAGIC client.execute_post_json(f"{client.endpoint}/api/2.0/secrets/put", {
-# MAGIC   "scope": "solution-accelerator-cicd",
 # MAGIC   "key": "azure_devops_pipeline_id",
 # MAGIC   "string_value": "____"
 # MAGIC })

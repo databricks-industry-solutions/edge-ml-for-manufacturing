@@ -78,7 +78,7 @@ print(run_id)
 # Set access token and organization URL variables by retrieving values from Secrets scope
 access_token = dbutils.secrets.get(scope = "solution-accelerator-cicd", key = "azure_devops_access_token")
 organization_url = dbutils.secrets.get(scope = "solution-accelerator-cicd", key = "azure_devops_organization_url") 
-azure_devops_project = dbutils.secrets.get(scope = "solution-accelerator-cicd", key = "azure_devops_project") 
+azure_devops_project = "Edge ML Deployment Accelerator" # update this to your own project name
 azure_devops_pipeline_id = "3" # enter your own pipeline id here. When you navigate to the pipeline page in Azure DevOps, this number is available in the url as definitionId. For instance, our pipeline url ended with `?definitionId=3`
 
 # Create a connection to the Azure DevOps Org
@@ -94,7 +94,3 @@ run_parameters = RunPipelineParameters(template_parameters = {"run_id":run_id, "
 # Trigger pipeline
 runPipeline = pipeline_client.run_pipeline(run_parameters=run_parameters,project=azure_devops_project, pipeline_id=azure_devops_pipeline_id)
 print("Pipeline has been triggered")
-
-# COMMAND ----------
-
-
